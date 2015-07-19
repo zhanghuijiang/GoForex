@@ -1,0 +1,17 @@
+LIBRARY FXPlugin
+
+EXPORTS
+    MtSrvAbout
+    MtSrvStartup
+	MtSrvCleanup
+	MtSrvPluginCfgAdd
+    MtSrvPluginCfgSet
+    MtSrvPluginCfgGet
+    MtSrvPluginCfgNext
+    MtSrvPluginCfgDelete
+    MtSrvPluginCfgTotal
+	MtSrvTradesAdd
+	MtSrvTradeRequestApply
+	MtSrvTradesAddExt
+	MtSrvTradesUpdate
+
