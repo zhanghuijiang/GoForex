@@ -1,0 +1,17 @@
+﻿<Window x:Class="GoMaM.SecurityWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Security Window" Height="140" Width="307" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded"  AllowsTransparency="True" WindowStyle="None" Background="Transparent" Opacity="0.9" FontWeight="Bold">
+    <Border Style="{StaticResource DialogBorderStyle}">
+        <Border.Effect>
+            <DropShadowEffect Color="Gray" Opacity=".50" ShadowDepth="8" />
+        </Border.Effect>
+        <Grid>
+            <Label Height="28" Margin="3,12,0,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="144">Enter Password:</Label>
+            <PasswordBox HorizontalAlignment="Right" Margin="0,12,12,0" Name="txtPsw" Width="127" Height="25" VerticalAlignment="Top" TabIndex="1" />
+            <Button Height="23" Margin="0,0,79,12" Name="btnOK" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="60" TabIndex="2" Click="btnOK_Click" IsDefault="True">OK</Button>
+            <Button Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="btnCancel" VerticalAlignment="Bottom" Width="61" TabIndex="3" Click="btnCancel_Click">Cancel</Button>
+            <Image Name="image1"  Stretch="Uniform" HorizontalAlignment="Left" Width="30" Source="Images/Lock.ico" Height="30" VerticalAlignment="Bottom" Margin="6,0,0,10" />
+        </Grid>
+    </Border>
+</Window>

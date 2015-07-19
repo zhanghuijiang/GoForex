@@ -1,0 +1,242 @@
+﻿<Window x:Class="GoMaM.MainWin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+    Title="GoForex Multi Account Management Server [Ver: 1.0.3.2]" Height="630" Width="770" Loaded="Window_Loaded" FontWeight="Bold" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Normal" Icon="/GoMaM;component/Images/UserGroup.ico">
+    <Grid>
+        <Menu Height="22" Name="mainMenu" VerticalAlignment="Top">
+            <MenuItem Header="System">
+                <MenuItem Header="Connect" Name="menuConnect" Click="menuConnect_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/connect.ico" Width="20" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Disconnect"  Name="menuDisconnect" Click="menuDisconnect_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/disconnect.ico" Width="20" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Exit"  Name="menuExit" Click="menuExit_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Images/turnoff.ico" Width="20" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Sync" Name="Sync" Click="menuSync_Click"></MenuItem>
+        </Menu>
+        <StatusBar Height="23" Margin="5,0" Name="statusBar" VerticalAlignment="Bottom">
+            <StatusBarItem>Connections Status:</StatusBarItem>
+            <StatusBarItem>Pump</StatusBarItem>
+            <StatusBarItem>
+                <Canvas Width="18" Height="18">
+                    <Image Name="imgPumpDisconnected" Source="Images/Red.ico" Height="18" Width="18"/>
+                    <Image Name="imgPumpConnected" Source="Images/Green.ico" Height="18" Width="18" Visibility="Hidden" />
+                </Canvas>
+            </StatusBarItem>
+            <StatusBarItem> | </StatusBarItem>
+            <StatusBarItem>Direct</StatusBarItem>
+            <StatusBarItem>
+                <Canvas Width="18" Height="18">
+                    <Image Name="imgDirectDisconnected" Source="Images/Red.ico" Height="18" Width="18"/>
+                    <Image Name="imgdirectConnected" Source="Images/Green.ico" Height="18" Width="18" Visibility="Hidden" />
+                </Canvas>
+            </StatusBarItem>
+            <StatusBarItem>|</StatusBarItem>
+            <StatusBarItem>Checking Status:</StatusBarItem>
+            <StatusBarItem>
+                <Canvas Width="18" Height="18">
+                    <Image Name="imgCheckStatusError" Source="Images/Red.ico" Height="18" Width="18" Visibility="Hidden"/>
+                    <Image Name="imgCheckStatusOK" Source="Images/Green.ico" Height="18" Width="18" Visibility="Hidden" />
+                </Canvas>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Canvas Width="18" Height="18">
+                    <Image Name="imgCheckGroupStatusError" Source="Images/Red.ico" Height="18" Width="18" Visibility="Hidden"/>
+                    <Image Name="imgCheckGroupStatusOK" Source="Images/Green.ico" Height="18" Width="18" Visibility="Hidden" />
+                </Canvas>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl Margin="5,25" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="18" Source="Images/users.ico" />
+                        <TextBlock Text="Managers" Margin="2,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <GroupBox Header="Managers" Margin="7,12,0,12" Name="groupBox1" HorizontalAlignment="Left" Width="338">
+                        <Grid>
+                            <WpfToolkit:DataGrid AutoGenerateColumns="False" Name="gridManagers" Margin="10,10,10,70" SelectionMode="Single" SelectionChanged="gridManagers_SelectionChanged" LoadingRow="gridManagers_LoadingRow" Loaded="gridManagers_Loaded" HeadersVisibility="Column" IsReadOnly="True">
+                                <WpfToolkit:DataGrid.Columns>
+                                    <WpfToolkit:DataGridTextColumn Header="Login" TextBlock.TextAlignment="Center" Width="80" Binding="{Binding Path=Login,Mode=OneWay}"/>
+                                    <WpfToolkit:DataGridTextColumn Header="Name" Width="100" Binding="{Binding Path=Name,Mode=OneWay}" />
+                                    <WpfToolkit:DataGridTextColumn Header="Clients"  Width ="*" Binding="{Binding Path=ClientsCount,Mode=OneWay}"/>
+                                    <WpfToolkit:DataGridTextColumn Header="Multipliers"  Width ="*" Binding="{Binding Path=TotalMultiplier,Mode=OneWay}"/>
+                                </WpfToolkit:DataGrid.Columns>
+                            </WpfToolkit:DataGrid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,10,10,40">
+                                <Button Name="btnAddManager" Click="btnAddManager_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/add.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Add Manager</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnRemoveManager" Margin="10,0,0,0" Click="btnRemoveManager_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Margin="0,1,0,0" Source="Images/delete.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Remove manager</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnRefreshManager" Margin="10,0,0,0" Click="btnRefreshManager_Click" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Margin="0,1,0,0" Source="Images/refresh.ico" Height="16"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,10,10,10">
+                                <Button Name="btnAddManager1" Click="btnRefreshMultiple_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/refresh.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,5,0">Add / Refresh Multiple Clients</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Clients" Margin="351,12,7,12" Name="groupBox2">
+                        <Grid>
+                            <WpfToolkit:DataGrid AutoGenerateColumns="False" Name="gridClients" Margin="10,10,10,40" SelectionMode="Single" SelectionChanged="gridClients_SelectionChanged" HeadersVisibility="Column" IsReadOnly="True">
+                                <WpfToolkit:DataGrid.Columns>
+                                    <WpfToolkit:DataGridTextColumn Header="Login" Binding="{Binding Path=Login,Mode=OneWay}" Width="50" />
+                                    <WpfToolkit:DataGridTextColumn Header="Name" Binding="{Binding Path=Name,Mode=OneWay}" Width="100"/>
+                                    <WpfToolkit:DataGridTextColumn Header="Multiplier" Binding="{Binding Path=Multiplier,Mode=OneWay}" />
+                                    <WpfToolkit:DataGridTextColumn Header="Updated" Binding="{Binding Path=UpdateTime,Mode=OneWay}" Width="*" />
+                                </WpfToolkit:DataGrid.Columns>
+                            </WpfToolkit:DataGrid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,10,10,10">
+                                <Button Name="btnAddClient" Click="btnAddClient_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/add.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Add Client</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnRemoveClient" Margin="10,0,0,0" Click="btnRemoveClient_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/delete.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Remove Client</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnEditClient" Margin="10,0,0,0" Click="btnEditClient_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/edit.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Edit Client</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="18" Source="Images/users.ico" />
+                        <TextBlock Text="Groups" Margin="2,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <GroupBox Header="Groups" Margin="7,12,0,12" Name="groupBox11" HorizontalAlignment="Left" Width="338">
+                        <Grid>
+                            <WpfToolkit:DataGrid AutoGenerateColumns="False" Name="gridGroups" Margin="10,10,10,40" SelectionMode="Single" SelectionChanged="gridGroups_SelectionChanged" LoadingRow="gridGroups_LoadingRow" Loaded="gridGroups_Loaded" HeadersVisibility="Column" IsReadOnly="True">
+                                <WpfToolkit:DataGrid.Columns>
+                                    <WpfToolkit:DataGridTextColumn Header="Name" Width="180" Binding="{Binding Path=Name,Mode=OneWay}" />
+                                    <WpfToolkit:DataGridTextColumn Header="Clients"  Width ="*" Binding="{Binding Path=ClientsCount,Mode=OneWay}"/>
+                                    <WpfToolkit:DataGridTextColumn Header="Multipliers"  Width ="*" Binding="{Binding Path=TotalMultiplier,Mode=OneWay}"/>
+                                </WpfToolkit:DataGrid.Columns>
+                            </WpfToolkit:DataGrid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,10,10,10">
+                                <Button Name="btnAddGroup" Click="btnAddGroup_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/add.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Add Group</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnRemoveGroup" Margin="10,0,0,0" Click="btnRemoveGroup_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Margin="0,1,0,0" Source="Images/delete.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Remove Group</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnRefreshGroup" Margin="10,0,0,0" Click="btnRefreshGroup_Click" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0,0,0,0">Refresh</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Clients" Margin="351,12,7,12" Name="groupBox12">
+                        <Grid>
+                            <WpfToolkit:DataGrid AutoGenerateColumns="False" Name="gridClientsGr" Margin="10,10,10,40" SelectionMode="Single" SelectionChanged="gridClientsGr_SelectionChanged" HeadersVisibility="Column" IsReadOnly="True">
+                                <WpfToolkit:DataGrid.Columns>
+                                    <WpfToolkit:DataGridTextColumn Header="Login" Binding="{Binding Path=Login,Mode=OneWay}" Width="50" />
+                                    <WpfToolkit:DataGridTextColumn Header="Name" Binding="{Binding Path=Name,Mode=OneWay}" Width="100"/>
+                                    <WpfToolkit:DataGridTextColumn Header="Multiplier" Binding="{Binding Path=Multiplier,Mode=OneWay}" />
+                                    <WpfToolkit:DataGridTextColumn Header="Updated" Binding="{Binding Path=UpdateTime,Mode=OneWay}" Width="*" />
+                                </WpfToolkit:DataGrid.Columns>
+                            </WpfToolkit:DataGrid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,10,10,10">
+                                <Button Name="btnAddClientGr" Click="btnAddClientGr_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/add.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Add Client</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnRemoveClientGr" Margin="10,0,0,0" Click="btnRemoveClientGr_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/delete.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Remove Client</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnEditClientGr" Margin="10,0,0,0" Click="btnEditClientGr_Click" IsEnabled="False">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/edit.ico" Height="16"/>
+                                        <TextBlock Margin="5,0,0,0">Edit Client</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Name="btnSyncOpenTrades" Margin="10,0,0,0" Click="btnSyncOpenTrades_Click" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Images/refresh.ico" Height="16" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Name="logsTabItem">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="18" Source="Images/script.ico" />
+                        <TextBlock Text="Logs" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        <Image Name="imgBug" Height="18" Source="Images/bug.ico" Margin="5,0,0,0" Visibility="Hidden"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <GroupBox Header="Logs" Name="groupBox4" Margin="12">
+                    <Grid>
+                        <WpfToolkit:DataGrid HorizontalContentAlignment="Left" AutoGenerateColumns="False" Margin="10,34,10,6" Name="gridLogs" SelectionMode="Single" HeadersVisibility="Column" IsReadOnly="True">
+                            <WpfToolkit:DataGrid.Columns>
+                                <WpfToolkit:DataGridTextColumn Header="Type" Width="40" Binding="{Binding Path=Type,Mode=OneWay}"/>
+                                <WpfToolkit:DataGridTextColumn Header="Time" Width="100" Binding="{Binding Path=Time,Mode=OneWay}"/>
+                                <WpfToolkit:DataGridTextColumn Header="Source" Width="100" Binding="{Binding Path=Source,Mode=OneWay}"/>
+                                <WpfToolkit:DataGridTextColumn Header="Message" Width="*" Binding="{Binding Path=Msg,Mode=OneWay}"/>
+                            </WpfToolkit:DataGrid.Columns>
+                        </WpfToolkit:DataGrid>
+                        <CheckBox Height="19" HorizontalAlignment="Left" Margin="10.973,9,0,0" Name="chkEnableExtendedLogging" VerticalAlignment="Top" Width="120" Checked="chkEnableExtendedLogging_Checked" Unchecked="chkEnableExtendedLogging_Unchecked" IsChecked="True">Extended Logging</CheckBox>
+                    </Grid>
+                </GroupBox>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

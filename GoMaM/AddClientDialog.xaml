@@ -1,0 +1,64 @@
+﻿<Window x:Class="GoMaM.AddClientDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:GoMaM"
+    Title="AddClientDialog" Height="400" Width="300" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded"  AllowsTransparency="True" WindowStyle="None" Background="Transparent" Opacity="0.9" FontWeight="Bold" Foreground="White">
+    <Border Style="{StaticResource DialogBorderStyle}" >
+        <Border.Effect>
+            <DropShadowEffect Color="Gray" Opacity=".50" ShadowDepth="8" />
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" FontSize="14" VerticalAlignment="Top">Add Client Dialog</Label>
+            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57">Login:</Label>
+            <local:NumericTextBox Grid.Column="1" Grid.Row="1" x:Name="txtLogin" Height="23" VerticalAlignment="Center" SupportDecimal="False"/>
+            <Button Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="btnSearch" Width="75" Height="23"  Click="btnSearch_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/search.ico" Height="16"/>
+                    <TextBlock Margin="5,0,0,0">Search</TextBlock>
+                </StackPanel>
+            </Button>
+            <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">Name:</Label>
+            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Name="txtUserName" VerticalAlignment="Center"></Label>
+            <Label Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center">Group:</Label>
+            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Name="txtUserGroup" VerticalAlignment="Center"></Label>
+            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" VerticalAlignment="Center">Multiplier</Label>
+            <local:NumericTextBox  x:Name="txtMultiplier" Grid.Column="1" Grid.Row="4" Height="23" VerticalAlignment="Center" Unsigned="False" SupportDecimal="True"/>
+            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center">Being added to manager:</Label>
+            <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center">Login:</Label>
+            <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Name="txtManagerLogin"></Label>
+            <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Center">Name:</Label>
+            <Label Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Center" Name="txtManagerName"></Label>
+            <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center">Group:</Label>
+            <Label Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Name="txtManagerGroup"></Label>
+            <Button Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left"  Name="btnAdd" Width="75" VerticalAlignment="Bottom" Height="23" Click="btnAdd_Click" IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/add.ico" Height="16"/>
+                    <TextBlock Margin="5,0,0,0">Add</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="1" Grid.Row="9" Name="btnCancel" Click="btnCancel_Click" Width="75" VerticalAlignment="Bottom" Height="23">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/undo.ico" Height="16"/>
+                    <TextBlock Margin="5,0,0,0">Cancel</TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Border>
+</Window>
