@@ -459,10 +459,10 @@ namespace MT4ServerAPI
                 if (MapMessages.TryGetValue(obj.ClientTime, out item))
                 {
                     RemoveMessageFromMap(obj);
-                    SGetUserInfo get_user_info = (SGetUserInfo)item._response;
-                    if (get_user_info.ReturnCode != eReturnCode.E_Success)
+                    ret = (SGetUserInfo)item._response;
+                    if (ret.ReturnCode != eReturnCode.E_Success)
                     {
-                        OnMsg(get_user_info.ErrorDescription, eMsgType.ERR);
+                        OnMsg(ret.ErrorDescription, eMsgType.ERR);
                     }
                 }
                 else
